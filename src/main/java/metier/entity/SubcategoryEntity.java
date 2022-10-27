@@ -13,12 +13,6 @@ public class SubcategoryEntity {
     @Column(name = "name")
     private String name;
     @Basic
-    @Column(name = "creadit")
-    private int creadit;
-    @Basic
-    @Column(name = "percentage")
-    private String percentage;
-    @Basic
     @Column(name = "idcategory")
     private int idcategory;
 
@@ -38,22 +32,6 @@ public class SubcategoryEntity {
         this.name = name;
     }
 
-    public int getCreadit() {
-        return creadit;
-    }
-
-    public void setCreadit(int creadit) {
-        this.creadit = creadit;
-    }
-
-    public String getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(String percentage) {
-        this.percentage = percentage;
-    }
-
     public int getIdcategory() {
         return idcategory;
     }
@@ -70,10 +48,8 @@ public class SubcategoryEntity {
         SubcategoryEntity that = (SubcategoryEntity) o;
 
         if (idsubcategory != that.idsubcategory) return false;
-        if (creadit != that.creadit) return false;
         if (idcategory != that.idcategory) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (percentage != null ? !percentage.equals(that.percentage) : that.percentage != null) return false;
 
         return true;
     }
@@ -82,8 +58,6 @@ public class SubcategoryEntity {
     public int hashCode() {
         int result = idsubcategory;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + creadit;
-        result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
         result = 31 * result + idcategory;
         return result;
     }

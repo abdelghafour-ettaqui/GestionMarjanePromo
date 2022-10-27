@@ -16,7 +16,7 @@ public class PromoEntity {
     private String name;
     @Basic
     @Column(name = "idcategory")
-    private int idcategory;
+    private Integer idcategory ;
     @Basic
     @Column(name = "percentage")
     private String percentage;
@@ -29,6 +29,12 @@ public class PromoEntity {
     @Basic
     @Column(name = "status")
     private String status;
+    @Basic
+    @Column(name = "idsubcategory")
+    private Integer idSubCategory;
+    @Basic
+    @Column(name = "idstore")
+    private Integer idStore;
 
     public int getIdpromo() {
         return idpromo;
@@ -46,11 +52,11 @@ public class PromoEntity {
         this.name = name;
     }
 
-    public int getIdcategory() {
+    public Integer getIdcategory() {
         return idcategory;
     }
 
-    public void setIdcategory(int idcategory) {
+    public void setIdcategory(Integer idcategory) {
         this.idcategory = idcategory;
     }
 
@@ -86,6 +92,22 @@ public class PromoEntity {
         this.status = status;
     }
 
+    public Integer getIdSubCategory() {
+        return idSubCategory;
+    }
+
+    public void setIdSubCategory(Integer idSubCategory) {
+        this.idSubCategory = idSubCategory;
+    }
+
+    public Integer getIdStore() {
+        return idStore;
+    }
+
+    public void setIdStore(Integer idStore) {
+        this.idStore = idStore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,6 +122,9 @@ public class PromoEntity {
         if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
         if (enddate != null ? !enddate.equals(that.enddate) : that.enddate != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (idSubCategory != null ? !idSubCategory.equals(that.idSubCategory) : that.idSubCategory != null)
+            return false;
+        if (idStore != null ? !idStore.equals(that.idStore) : that.idStore != null) return false;
 
         return true;
     }
@@ -113,6 +138,8 @@ public class PromoEntity {
         result = 31 * result + (startdate != null ? startdate.hashCode() : 0);
         result = 31 * result + (enddate != null ? enddate.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (idSubCategory != null ? idSubCategory.hashCode() : 0);
+        result = 31 * result + (idStore != null ? idStore.hashCode() : 0);
         return result;
     }
 }

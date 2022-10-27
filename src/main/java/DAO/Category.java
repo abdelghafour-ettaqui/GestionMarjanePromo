@@ -21,14 +21,9 @@ public class Category implements Dao<CategoryEntity> {
 
     @Override
     public List<CategoryEntity> getAll() {
-        return null;
-    }
-    public List<CategoryEntity> getAll(long idAdminStore) {
-        Query query = entityManager.createQuery("select c from CategoryEntity c where c.idstoreadmin=:id").setParameter("id",idAdminStore);
-        return query.getResultList();
-    }
-    public List<CategoryEntity> getAll(long idAdminStore,String name) {
-        Query query = entityManager.createQuery("select c from CategoryEntity c where c.idstoreadmin=:id and c.name = :name").setParameter("id",idAdminStore).setParameter("name",name);
+
+        Query query = entityManager.createQuery("select c from CategoryEntity c");
+
         return query.getResultList();
     }
 

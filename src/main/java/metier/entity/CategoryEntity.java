@@ -12,12 +12,6 @@ public class CategoryEntity {
     @Basic
     @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "percentage")
-    private String percentage;
-    @Basic
-    @Column(name = "idstoreadmin")
-    private int idstoreadmin;
 
     public int getIdcategory() {
         return idcategory;
@@ -35,22 +29,6 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    public String getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(String percentage) {
-        this.percentage = percentage;
-    }
-
-    public int getIdstoreadmin() {
-        return idstoreadmin;
-    }
-
-    public void setIdstoreadmin(int idstoreadmin) {
-        this.idstoreadmin = idstoreadmin;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,9 +37,7 @@ public class CategoryEntity {
         CategoryEntity that = (CategoryEntity) o;
 
         if (idcategory != that.idcategory) return false;
-        if (idstoreadmin != that.idstoreadmin) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (percentage != null ? !percentage.equals(that.percentage) : that.percentage != null) return false;
 
         return true;
     }
@@ -70,8 +46,6 @@ public class CategoryEntity {
     public int hashCode() {
         int result = idcategory;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
-        result = 31 * result + idstoreadmin;
         return result;
     }
 }

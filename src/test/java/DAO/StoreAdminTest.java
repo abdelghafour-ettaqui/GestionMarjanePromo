@@ -33,6 +33,7 @@ class StoreAdminTest {
         StoreAdmin storeAdmin= new StoreAdmin();
 
         storeAdmin.save(user);
+
         String message="hello, this your new account for managing your store \n the email is "+user.getEmail()+" the password is "+user.getPassword();
         SendingEmail.send(user.getEmail(),"new account",message);
 

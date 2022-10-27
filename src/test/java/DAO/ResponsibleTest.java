@@ -27,7 +27,7 @@ class ResponsibleTest {
     @Test
     void CheckIfSaveMethodGoesWell() {
 
-        UsersEntity user = new UsersEntity("abdelghafour","ettaqui88@gmail.com","password","responsible",1);
+        UsersEntity user = new UsersEntity("abdelghafour","ettaqui88@gmail.com","password","responsible",1,1);
 
 
         Responsible responsible = new Responsible();
@@ -42,7 +42,7 @@ class ResponsibleTest {
     @Test
     void update() {
         Responsible responsible = new Responsible();
-        UsersEntity user = new UsersEntity("abdela","email@gamil.com","password","StoreAdmin",1);
+        UsersEntity user = new UsersEntity("abdela","email@gamil.com","password","StoreAdmin",1,1);
         user.setIduser(5);
 
         responsible.update(user);
@@ -53,4 +53,6 @@ class ResponsibleTest {
         Responsible responsible = new Responsible();
         responsible.delete(7);
     }
+
+
 }

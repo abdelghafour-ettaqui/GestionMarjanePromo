@@ -36,6 +36,7 @@ public class Promotion implements Dao<PromoEntity> {
 
         EntityTransaction transaction = entityManager.getTransaction();
         try {
+            System.out.println(promotion.getIdcategory());
 
             transaction.begin();
 

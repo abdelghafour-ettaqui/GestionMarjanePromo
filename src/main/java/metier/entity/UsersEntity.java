@@ -24,10 +24,9 @@ public class UsersEntity {
     @Basic
     @Column(name = "idcategory")
     private Integer idcategory;
-
-    public UsersEntity() {
-
-    }
+    @Basic
+    @Column(name = "idStore")
+    private Integer idStore;
 
     public int getIduser() {
         return iduser;
@@ -77,6 +76,14 @@ public class UsersEntity {
         this.idcategory = idcategory;
     }
 
+    public Integer getIdStore() {
+        return idStore;
+    }
+
+    public void setIdStore(Integer idStore) {
+        this.idStore = idStore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,6 +97,7 @@ public class UsersEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
         if (idcategory != null ? !idcategory.equals(that.idcategory) : that.idcategory != null) return false;
+        if (idStore != null ? !idStore.equals(that.idStore) : that.idStore != null) return false;
 
         return true;
     }
@@ -102,14 +110,24 @@ public class UsersEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (idcategory != null ? idcategory.hashCode() : 0);
+        result = 31 * result + (idStore != null ? idStore.hashCode() : 0);
         return result;
     }
 
-    public UsersEntity(String fullname, String email, String password, String role, Integer idcategory,Integer idStore) {
+    public UsersEntity(String fullname, String email, String password, String role, Integer idStore) {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
         this.role = role;
         this.idcategory = idcategory;
+        this.idStore = idStore;
+    }
+    public UsersEntity(String fullname, String email, String password, String role, Integer idcategory, Integer idStore) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.idcategory = idcategory;
+        this.idStore = idStore;
     }
 }

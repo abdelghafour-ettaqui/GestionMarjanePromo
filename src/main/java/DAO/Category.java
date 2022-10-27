@@ -4,28 +4,36 @@ import jakarta.persistence.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import metier.entity.CategoryEntity;
 
-public class Category implements Dao<metier.entity.Category> {
+public class Category implements Dao<CategoryEntity> {
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     private EntityManager entityManager = entityManagerFactory.createEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
 
     @Override
-    public metier.entity.Category get(long id) {
+    public CategoryEntity get(long id) {
 
-        metier.entity.Category category = entityManager.find(metier.entity.Category.class, id);
+        CategoryEntity category = entityManager.find(CategoryEntity.class, id);
 
         return category;
     }
 
     @Override
-    public List<metier.entity.Category> getAll() {
-        Query query = entityManager.createQuery("select c from Category c");
+    public List<CategoryEntity> getAll() {
+        return null;
+    }
+    public List<CategoryEntity> getAll(long idAdminStore) {
+        Query query = entityManager.createQuery("select c from CategoryEntity c where c.idstoreadmin=:id").setParameter("id",idAdminStore);
+        return query.getResultList();
+    }
+    public List<CategoryEntity> getAll(long idAdminStore,String name) {
+        Query query = entityManager.createQuery("select c from CategoryEntity c where c.idstoreadmin=:id and c.name = :name").setParameter("id",idAdminStore).setParameter("name",name);
         return query.getResultList();
     }
 
     @Override
-    public void save(metier.entity.Category category) {
+    public void save( CategoryEntity category) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
@@ -40,7 +48,7 @@ public class Category implements Dao<metier.entity.Category> {
     }
 
     @Override
-    public void update(metier.entity.Category category) {
+    public void update(CategoryEntity category) {
         try {
             transaction.begin();
 
@@ -62,7 +70,7 @@ public class Category implements Dao<metier.entity.Category> {
         try {
             transaction.begin();
 
-            metier.entity.Category category = entityManager.find(metier.entity.Category.class, id);
+            CategoryEntity category = entityManager.find(CategoryEntity.class, id);
 
             entityManager.remove(category);
 

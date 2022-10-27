@@ -1,52 +1,58 @@
 package DAO;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import metier.entity.UsersEntity;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
-import metier.entity.StoreEntity;
 import java.util.List;
 
-public class Store implements Dao<StoreEntity> {
-
+public class Responsible implements Dao<UsersEntity> {
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     private EntityManager entityManager = entityManagerFactory.createEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
 
-
     @Override
-    public StoreEntity get(long id) {
+    public UsersEntity get(long id) {
 
-        StoreEntity store = entityManager.find(StoreEntity.class, id);
+        UsersEntity user = entityManager.find(UsersEntity.class, id);
 
-        return store;
+        return user;
     }
 
+
     @Override
-    public List<StoreEntity> getAll() {
-        Query query = entityManager.createQuery("select s from StoreEntity s");
+    public List<UsersEntity> getAll() {
+
+        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role ").setParameter("role", "Responsible");
         return query.getResultList();
     }
 
     @Override
-    public void save(StoreEntity store) {
+    public void save(UsersEntity user) {
+
+
         try {
             transaction.begin();
-            entityManager.persist(store);
+            entityManager.persist(user);
             transaction.commit();
+
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-
         }
-
     }
 
     @Override
-    public void update(StoreEntity store) {
+    public void update(UsersEntity users) {
+
         try {
             transaction.begin();
 
-            entityManager.merge(store);
+            entityManager.merge(users);
 
             transaction.commit();
 
@@ -56,18 +62,18 @@ public class Store implements Dao<StoreEntity> {
             }
             e.printStackTrace();
         }
-
 
     }
 
     @Override
     public void delete(long id) throws SQLException {
+
         try {
             transaction.begin();
 
-            StoreEntity store = entityManager.find(StoreEntity.class, id);
+            UsersEntity user = entityManager.find(UsersEntity.class, id);
 
-            entityManager.remove(store);
+            entityManager.remove(user);
 
             transaction.commit();
 
@@ -77,6 +83,7 @@ public class Store implements Dao<StoreEntity> {
             }
             e.printStackTrace();
         }
+
 
     }
 }

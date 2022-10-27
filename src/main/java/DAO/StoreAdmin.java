@@ -2,35 +2,35 @@ package DAO;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
-import metier.entity.Users;
+import metier.entity.UsersEntity;
 import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class StoreAdmin implements Dao<Users> {
+public class StoreAdmin implements Dao<UsersEntity> {
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     private EntityManager entityManager = entityManagerFactory.createEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
 
     @Override
-    public Users get(long id) {
+    public UsersEntity get(long id) {
 
-        Users user = entityManager.find(Users.class, id);
+        UsersEntity user = entityManager.find(UsersEntity.class, id);
 
         return user;
     }
 
 
     @Override
-    public List<Users> getAll() {
+    public List<UsersEntity> getAll() {
 
-        Query query = Connection.getEntityManager().createQuery("select u from Users u where u.role= :role ").setParameter("role", "storeAdmin");
+        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role ").setParameter("role", "storeAdmin");
         return query.getResultList();
     }
 
     @Override
-    public void save(Users user) {
+    public void save(UsersEntity user) {
 
 
         try {
@@ -47,7 +47,7 @@ public class StoreAdmin implements Dao<Users> {
     }
 
     @Override
-    public void update(Users users) {
+    public void update(UsersEntity users) {
 
         try {
             transaction.begin();
@@ -71,7 +71,7 @@ public class StoreAdmin implements Dao<Users> {
         try {
             transaction.begin();
 
-            Users user = entityManager.find(Users.class, id);
+            UsersEntity user = entityManager.find(UsersEntity.class, id);
 
             entityManager.remove(user);
 

@@ -5,12 +5,12 @@
              version="3.0">
     <persistence-unit name="marjane">
 
-        <class>metier.entity.Category</class>
-        <class>metier.entity.Promotion</class>
-        <class>metier.entity.Store</class>
-        <class>metier.entity.Subcategory</class>
-        <class>metier.entity.Users</class>
-        <class>metier.entity.Promotion</class>
+
+        <class>metier.entity.CategoryEntity</class>
+        <class>metier.entity.PromoEntity</class>
+        <class>metier.entity.SubcategoryEntity</class>
+        <class>metier.entity.UsersEntity</class>
+        <class>metier.entity.StoreEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/marjane"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

@@ -1,11 +1,12 @@
 package DAO;
 
-import metier.entity.Users;
+import metier.entity.UsersEntity;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import Email.SendingEmail;
 
 class StoreAdminTest {
 
@@ -26,19 +27,22 @@ class StoreAdminTest {
     @Test
     void CheckIfSaveMethodGoesWell() {
 
-        Users user = new Users("abdelghafour","email@gamil.com","password","StoreAdmin",1);
+        UsersEntity user = new UsersEntity("abdelghafour","ettaqui88@gmail.com","password","StoreAdmin",1);
 
 
         StoreAdmin storeAdmin= new StoreAdmin();
 
         storeAdmin.save(user);
+        String message="hello, this your new account for managing your store \n the email is "+user.getEmail()+" the password is "+user.getPassword();
+        SendingEmail.send(user.getEmail(),"new account",message);
+
 
     }
 
     @Test
     void update() {
         StoreAdmin storeAdmin= new StoreAdmin();
-        Users user = new Users("abdela","email@gamil.com","password","StoreAdmin",1);
+        UsersEntity user = new UsersEntity("abdela","email@gamil.com","password","StoreAdmin",1);
         user.setIduser(5);
 
         storeAdmin.update(user);

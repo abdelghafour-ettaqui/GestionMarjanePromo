@@ -2,10 +2,9 @@ package metier.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
-public class Subcategory implements Serializable {
+@Table(name = "subcategory", schema = "public", catalog = "marjane")
+public class SubcategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idsubcategory")
@@ -68,7 +67,7 @@ public class Subcategory implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Subcategory that = (Subcategory) o;
+        SubcategoryEntity that = (SubcategoryEntity) o;
 
         if (idsubcategory != that.idsubcategory) return false;
         if (creadit != that.creadit) return false;

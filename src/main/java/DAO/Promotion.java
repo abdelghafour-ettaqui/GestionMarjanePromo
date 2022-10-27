@@ -1,45 +1,52 @@
 package DAO;
 
 import jakarta.persistence.*;
-import metier.entity.Users;
+import metier.entity.UsersEntity;
+import metier.entity.PromoEntity;
 
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class Promotion implements Dao<Object> {
+public class Promotion implements Dao<PromoEntity> {
 
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     private EntityManager entityManager = entityManagerFactory.createEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
 
     @Override
-    public Object get(long id) {
+    public PromoEntity get(long id) {
 
-        metier.entity.Promotion promotion = entityManager.find(metier.entity.Promotion.class, id);
+        PromoEntity promotion = entityManager.find(PromoEntity.class, id);
 
         return promotion;
 
     }
 
     @Override
-    public List<Object> getAll() {
+    public List<PromoEntity> getAll() {
 
-        Query query = entityManager.createQuery("select p from Promotion p");
+        Query query = entityManager.createQuery("select p from PromoEntity p");
         return query.getResultList();
 
     }
 
     @Override
-    public void save(Object promotion) {
+    public void save(PromoEntity promotion) {
 
         EntityTransaction transaction = entityManager.getTransaction();
         try {
+
             transaction.begin();
+
             entityManager.persist(promotion);
+
             transaction.commit();
+
         } catch (Exception e) {
+
             transaction.rollback();
+
             e.printStackTrace();
 
         }
@@ -47,7 +54,7 @@ public class Promotion implements Dao<Object> {
     }
 
     @Override
-    public void update(Object promotion) {
+    public void update(PromoEntity promotion) {
         try {
             transaction.begin();
 
@@ -69,7 +76,7 @@ public class Promotion implements Dao<Object> {
         try {
             transaction.begin();
 
-            metier.entity.Promotion promotion = entityManager.find(metier.entity.Promotion.class, id);
+            PromoEntity promotion = entityManager.find(PromoEntity.class, id);
 
             entityManager.remove(promotion);
 

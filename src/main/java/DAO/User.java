@@ -1,33 +1,33 @@
 package DAO;
 
 import jakarta.persistence.Query;
-import metier.entity.Users;
+import metier.entity.UsersEntity;
 import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class User implements Dao<Users> {
+public class User implements Dao<UsersEntity> {
 
 
     @Override
-    public Users get(long id) {
+    public UsersEntity get(long id) {
         return null;
     }
 
     @Override
-    public List<Users> getAll() {
+    public List<UsersEntity> getAll() {
         return null;
     }
 
     @Override
-    public void save(Users users) {
+    public void save(UsersEntity users) {
 
 
     }
 
     @Override
-    public void update(Users users) {
+    public void update(UsersEntity users) {
 
     }
 
@@ -42,9 +42,9 @@ public class User implements Dao<Users> {
 
         try {
 
-            Query query = Connection.getEntityManager().createQuery("select u from Users u where u.email = :email ").setParameter("email", email);
+            Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.email = :email ").setParameter("email", email);
 
-            metier.entity.Users user = (metier.entity.Users) query.getSingleResult();
+            UsersEntity user = (UsersEntity) query.getSingleResult();
 
 
             System.out.println("------------------------------------------------------------ " + user.getFullname());

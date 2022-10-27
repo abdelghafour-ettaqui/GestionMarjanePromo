@@ -8,10 +8,21 @@ class CategoryTest {
 
     @Test
     void get() {
+
     }
 
     @Test
     void getAll() {
+        Category category = new Category();
+        long idStoreAdmin=1;
+        assertNotNull(category.getAll(idStoreAdmin));
+    }
+    @Test
+    void getAllPromoWithSpecificCategory() {
+        Category category = new Category();
+        long idStoreAdmin=1;
+        String name = "test";
+        assertNotNull(category.getAll(idStoreAdmin,name));
     }
 
     @Test

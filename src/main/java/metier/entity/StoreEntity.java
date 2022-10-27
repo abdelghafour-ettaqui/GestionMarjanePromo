@@ -2,11 +2,9 @@ package metier.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "store", schema = "public", catalog = "marjane")
-public class Store implements Serializable {
+public class StoreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idstore")
@@ -47,7 +45,7 @@ public class Store implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Store that = (Store) o;
+        StoreEntity that = (StoreEntity) o;
 
         if (idstore != that.idstore) return false;
         if (idstoreadmin != that.idstoreadmin) return false;

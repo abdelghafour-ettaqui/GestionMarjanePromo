@@ -2,10 +2,9 @@ package metier.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
-public class Users implements Serializable {
+@Table(name = "users", schema = "public", catalog = "marjane")
+public class UsersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "iduser")
@@ -25,6 +24,10 @@ public class Users implements Serializable {
     @Basic
     @Column(name = "idcategory")
     private Integer idcategory;
+
+    public UsersEntity() {
+
+    }
 
     public int getIduser() {
         return iduser;
@@ -79,14 +82,14 @@ public class Users implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Users users = (Users) o;
+        UsersEntity that = (UsersEntity) o;
 
-        if (iduser != users.iduser) return false;
-        if (fullname != null ? !fullname.equals(users.fullname) : users.fullname != null) return false;
-        if (email != null ? !email.equals(users.email) : users.email != null) return false;
-        if (password != null ? !password.equals(users.password) : users.password != null) return false;
-        if (role != null ? !role.equals(users.role) : users.role != null) return false;
-        if (idcategory != null ? !idcategory.equals(users.idcategory) : users.idcategory != null) return false;
+        if (iduser != that.iduser) return false;
+        if (fullname != null ? !fullname.equals(that.fullname) : that.fullname != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (role != null ? !role.equals(that.role) : that.role != null) return false;
+        if (idcategory != null ? !idcategory.equals(that.idcategory) : that.idcategory != null) return false;
 
         return true;
     }
@@ -102,26 +105,11 @@ public class Users implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "iduser=" + iduser +
-                ", fullname='" + fullname + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", idcategory=" + idcategory +
-                '}';
-    }
-
-    public Users(String fullname, String email, String password, String role, Integer idcategory) {
+    public UsersEntity(String fullname, String email, String password, String role, Integer idcategory,Integer idStore) {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
         this.role = role;
         this.idcategory = idcategory;
-    }
-    public Users(){
-
     }
 }

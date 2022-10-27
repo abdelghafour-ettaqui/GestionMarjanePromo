@@ -1,33 +1,33 @@
 package DAO;
 
 import jakarta.persistence.*;
-import metier.entity.Subcategory;
-import metier.entity.Users;
+import metier.entity.SubcategoryEntity;
+import metier.entity.UsersEntity;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class SubCategory implements Dao<metier.entity.Subcategory> {
+public class SubCategory implements Dao<metier.entity.SubcategoryEntity> {
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     private EntityManager entityManager = entityManagerFactory.createEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
 
     @Override
-    public Subcategory get(long id) {
+    public SubcategoryEntity get(long id) {
 
-        Subcategory subCategory = entityManager.find(Subcategory.class, id);
+        SubcategoryEntity subCategory = entityManager.find(SubcategoryEntity.class, id);
 
         return subCategory;
     }
 
     @Override
-    public List<Subcategory> getAll() {
-        Query query = entityManager.createQuery("select s from Subcategory s");
+    public List<SubcategoryEntity> getAll() {
+        Query query = entityManager.createQuery("select s from SubcategoryEntity s");
         return query.getResultList();
     }
 
     @Override
-    public void save(Subcategory subcategory) {
+    public void save(SubcategoryEntity subcategory) {
         try {
             transaction.begin();
             entityManager.persist(subcategory);
@@ -40,7 +40,7 @@ public class SubCategory implements Dao<metier.entity.Subcategory> {
     }
 
     @Override
-    public void update(Subcategory subcategory) {
+    public void update(SubcategoryEntity subcategory) {
         try {
             transaction.begin();
 
@@ -62,7 +62,7 @@ public class SubCategory implements Dao<metier.entity.Subcategory> {
         try {
             transaction.begin();
 
-            metier.entity.Subcategory subcategory = entityManager.find(metier.entity.Subcategory.class, id);
+            metier.entity.SubcategoryEntity subcategory = entityManager.find(metier.entity.SubcategoryEntity.class, id);
 
             entityManager.remove(subcategory);
 

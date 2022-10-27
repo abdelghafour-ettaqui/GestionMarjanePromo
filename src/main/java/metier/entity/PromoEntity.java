@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "promo", schema = "public", catalog = "marjane")
-public class Promotion {
+public class PromoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idpromo")
@@ -91,15 +91,15 @@ public class Promotion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Promotion promotion = (Promotion) o;
+        PromoEntity that = (PromoEntity) o;
 
-        if (idpromo != promotion.idpromo) return false;
-        if (idcategory != promotion.idcategory) return false;
-        if (name != null ? !name.equals(promotion.name) : promotion.name != null) return false;
-        if (percentage != null ? !percentage.equals(promotion.percentage) : promotion.percentage != null) return false;
-        if (startdate != null ? !startdate.equals(promotion.startdate) : promotion.startdate != null) return false;
-        if (enddate != null ? !enddate.equals(promotion.enddate) : promotion.enddate != null) return false;
-        if (status != null ? !status.equals(promotion.status) : promotion.status != null) return false;
+        if (idpromo != that.idpromo) return false;
+        if (idcategory != that.idcategory) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (percentage != null ? !percentage.equals(that.percentage) : that.percentage != null) return false;
+        if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
+        if (enddate != null ? !enddate.equals(that.enddate) : that.enddate != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
         return true;
     }

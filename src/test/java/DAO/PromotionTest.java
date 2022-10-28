@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +17,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class PromotionTest {
 
     @Test
-    void get() throws ParseException {
+    void getAllPromotionToResponsable() throws ParseException {
+        Promotion promo = new Promotion();
+        List<PromoEntity> promotions = new ArrayList<>();
+        String currentTime =  LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String startTime="08:00";
+        String endTime="12:00";
+        LocalTime sTime= LocalTime.parse(startTime);
+        LocalTime eTime= LocalTime.parse(endTime);
+        LocalTime t = LocalTime.parse(currentTime);
+
+        int condition1 = t.compareTo(sTime);
+        int condition2 = t.compareTo(eTime);
+
+       assertTrue(condition1 >= 0 && condition2 <= 0);
+
+        long millis=System.currentTimeMillis();
+        java.sql.Date date=new java.sql.Date(millis);
+
+        assertNotNull(promo.getAll(date));
+        for(PromoEntity promoA:promo.getAll(date)){
+            System.out.println(promoA.getStartdate());
+        }
+
+
 
 
 
@@ -76,7 +101,32 @@ class PromotionTest {
     }
 
     @Test
-    void update() {
+    void updatingPromotionStatusPenddingToAccepted() {
+        Promotion promo = new Promotion();
+
+
+        PromoEntity promotion = promo.get(13);
+
+        promotion.setStatus("accepted");
+
+        promotion.setIdpromo(13);
+
+        promo.update(promotion);
+
+    }
+    @Test
+    void updatingPromotionStatusPenddingToRefused() {
+        Promotion promo = new Promotion();
+
+
+        PromoEntity promotion = promo.get(13);
+
+        promotion.setStatus("refused");
+
+        promotion.setIdpromo(13);
+
+        promo.update(promotion);
+
     }
 
     @Test

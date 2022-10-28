@@ -6,6 +6,7 @@ import metier.entity.PromoEntity;
 
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Promotion implements Dao<PromoEntity> {
@@ -29,6 +30,11 @@ public class Promotion implements Dao<PromoEntity> {
         Query query = entityManager.createQuery("select p from PromoEntity p");
         return query.getResultList();
 
+    }
+
+    public List<PromoEntity> getAll(java.sql.Date currentDate) {
+        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.status='pendding' AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
+        return query.getResultList();
     }
 
     @Override
@@ -58,6 +64,7 @@ public class Promotion implements Dao<PromoEntity> {
     public void update(PromoEntity promotion) {
         try {
             transaction.begin();
+//            PromoEntity promotion = entityManager.find(PromoEntity.class, id);
 
             entityManager.merge(promotion);
 

@@ -51,6 +51,20 @@ class PromotionTest {
     void createPromotionForAllSubCategory() throws ParseException {
         Promotion promo = new Promotion();
         PromoEntity promoEntity = new PromoEntity();
+
+        String currentTime =  LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String startTime="08:00";
+        String endTime="12:00";
+        LocalTime sTime= LocalTime.parse(startTime);
+        LocalTime eTime= LocalTime.parse(endTime);
+        LocalTime t = LocalTime.parse(currentTime);
+
+        int condition1 = t.compareTo(sTime);
+        int condition2 = t.compareTo(eTime);
+
+        assertTrue(condition1 >= 0 && condition2 <= 0);
+
+
         String startDate="2022-11-01";
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = sdf1.parse(startDate);
@@ -59,6 +73,16 @@ class PromotionTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date1 = sdf.parse(endDate);
         java.sql.Date sqlEndDate = new java.sql.Date(date1.getTime());
+        int percentage = Integer.parseInt("10");
+        int idCategory=1;
+        if( idCategory == 1 && percentage>20){
+            System.out.println("for multimedia products the promotion should not be more than 20%");
+            assertNotNull(null);
+        }
+        else if(percentage>50){
+            System.out.print("promotion should not be greater than 50%");
+            assertNotNull(null);
+        }
         promoEntity.setStartdate(sqlStartDate);
         promoEntity.setEnddate(sqlEndDate);
         promoEntity.setPercentage("50");
@@ -86,6 +110,17 @@ class PromotionTest {
         java.util.Date date1 = sdf.parse(endDate);
         java.sql.Date sqlEndDate = new java.sql.Date(date1.getTime());
 
+
+        int percentage = Integer.parseInt("50");
+        int idCategory=1;
+        if( idCategory == 1 && percentage>20){
+            System.out.println("for multimedia products the promotion should not be more than 20%");
+            assertNotNull(null);
+        }
+        else if(percentage>50){
+            System.out.print("promotion should not be greater than 50%");
+            assertNotNull(null);
+        }
         promoEntity.setStartdate(sqlStartDate);
         promoEntity.setEnddate(sqlEndDate);
         promoEntity.setPercentage("50");

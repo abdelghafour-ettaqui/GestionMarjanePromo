@@ -17,6 +17,7 @@ public class CrudResponsible extends HttpServlet {
         if (path.equals("/CrudResponsible/displayResponsible")) {
 
             CrudResponsibleService.displayResponsible(request, response);
+
         } else if (path.equals("/CrudResponsible/deleteResponsible")) {
             try {
                 CrudResponsibleService.deleteResponsible(request, response);
@@ -24,7 +25,6 @@ public class CrudResponsible extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     @Override

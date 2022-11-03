@@ -14,13 +14,7 @@ import services.CrudStoreAdminService;
 @MultipartConfig
 public class CrudStoreAdmin extends HttpServlet {
 
-    private User user;
 
-    @Override
-    public void init() throws ServletException {
-        user = new User();
-
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

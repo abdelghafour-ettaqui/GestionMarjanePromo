@@ -2,6 +2,8 @@ package metier.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "store", schema = "public", catalog = "marjane")
 public class StoreEntity {
@@ -15,6 +17,13 @@ public class StoreEntity {
     @Basic
     @Column(name = "idstoreadmin")
     private int idstoreadmin;
+    @OneToMany(mappedBy = "storeByIdstore")
+    private Collection<PromoEntity> promosByIdstore;
+    @ManyToOne
+    @JoinColumn(name = "idstoreadmin", referencedColumnName = "iduser", nullable = false, insertable = false, updatable = false)
+    private UsersEntity usersByIdstoreadmin;
+    @OneToMany(mappedBy = "storeByIdstore")
+    private Collection<UsersEntity> usersByIdstore;
 
     public int getIdstore() {
         return idstore;
@@ -60,5 +69,29 @@ public class StoreEntity {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + idstoreadmin;
         return result;
+    }
+
+    public Collection<PromoEntity> getPromosByIdstore() {
+        return promosByIdstore;
+    }
+
+    public void setPromosByIdstore(Collection<PromoEntity> promosByIdstore) {
+        this.promosByIdstore = promosByIdstore;
+    }
+
+    public UsersEntity getUsersByIdstoreadmin() {
+        return usersByIdstoreadmin;
+    }
+
+    public void setUsersByIdstoreadmin(UsersEntity usersByIdstoreadmin) {
+        this.usersByIdstoreadmin = usersByIdstoreadmin;
+    }
+
+    public Collection<UsersEntity> getUsersByIdstore() {
+        return usersByIdstore;
+    }
+
+    public void setUsersByIdstore(Collection<UsersEntity> usersByIdstore) {
+        this.usersByIdstore = usersByIdstore;
     }
 }

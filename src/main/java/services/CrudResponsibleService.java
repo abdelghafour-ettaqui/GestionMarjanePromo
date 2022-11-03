@@ -61,13 +61,11 @@ public class CrudResponsibleService {
 //        HttpSession session = request.getSession();
 //        session.setAttribute("storeAdmin",);
         long idStore = 1;
-
         Responsible Responsible = new Responsible();
         List<UsersEntity> Responsibles = Responsible.getAll(idStore);
-
         request.setAttribute("Responsibles", Responsibles);
-
-        request.getRequestDispatcher(".././Responsible/crudResponsible.jsp").forward(request, response);
+        System.out.println("test");
+        request.getRequestDispatcher(".././Responsible/crudResponsible.jsp").forward(request,response);
 
     }
 

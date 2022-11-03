@@ -15,6 +15,8 @@ public class Promotion extends HttpServlet {
         if(path.equals("/promotion/displayPromotion")){
             System.out.println("test 1");
             PromotionService.displayPromotion(request,response);
+        }else if (path.equals("/promotion/updatePromotion")) {
+            PromotionService.updatePromotion(request,response);
         }
     }
 
@@ -22,8 +24,6 @@ public class Promotion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
         if (path.equals("/promotion/createPromotion")){
-
-        } else if (path.equals("/promotion/updatePromotion")) {
 
         }
     }

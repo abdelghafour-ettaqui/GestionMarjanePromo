@@ -88,7 +88,7 @@ class PromotionTest {
         promoEntity.setPercentage("50");
         promoEntity.setStatus("pending");
         promoEntity.setIdcategory(1);
-        promoEntity.setIdStore(1);
+        promoEntity.setIdstore(1);
         promoEntity.setName("eid");
         promo.save(promoEntity);
 
@@ -125,7 +125,7 @@ class PromotionTest {
         promoEntity.setEnddate(sqlEndDate);
         promoEntity.setPercentage("50");
         promoEntity.setStatus("pending");
-        promoEntity.setIdSubCategory(1);
+        promoEntity.setIdsubcategory(1);
         promoEntity.setName("eid");
 
         promo.save(promoEntity);

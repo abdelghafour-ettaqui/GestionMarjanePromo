@@ -43,15 +43,13 @@ public class PromotionService {
     }
 
     public static void updatePromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UsersEntity storeAdmin = new UsersEntity();
-        storeAdmin.setEmail(request.getParameter("email"));
-        storeAdmin.setFullname(request.getParameter("fullname"));
-        storeAdmin.setPassword(request.getParameter("password"));
-        storeAdmin.setRole("StoreAdmin");
-        storeAdmin.setIdstore(Integer.parseInt(request.getParameter("idStore")));
-        storeAdmin.setIduser(Integer.parseInt(request.getParameter("idStoreAdmin")));
-        StoreAdmin admin = new StoreAdmin();
-        admin.update(storeAdmin);
+
+        PromoEntity promo = new PromoEntity();
+        Promotion promotion = new Promotion();
+        System.out.println("test teste testetsettet"+request.getParameter("idPromo"));
+        promo = promotion.get(Integer.parseInt(request.getParameter("idPromo")));
+        promo.setStatus(request.getParameter("status"));
+        promotion.update(promo);
         displayPromotion(request, response);
     }
 
@@ -63,7 +61,7 @@ public class PromotionService {
         Promotion promo = new Promotion();
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         String startTime = "08:00";
-        String endTime = "17:00";
+        String endTime = "19:00";
         LocalTime sTime = LocalTime.parse(startTime);
         LocalTime eTime = LocalTime.parse(endTime);
         LocalTime t = LocalTime.parse(currentTime);
@@ -75,14 +73,11 @@ public class PromotionService {
 
         if (condition1 >= 0 && condition2 <= 0) {
 
-            System.out.println("test 2");
-            System.out.println(date);
             List<PromoEntity> promotions = promo.getAll(date,idStore);
-
 
             request.setAttribute("Promotions", promotions);
         }
-        request.getRequestDispatcher(".././Responsible/Dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher(".././Responsible/dashboard.jsp").forward(request, response);
 
 
     }

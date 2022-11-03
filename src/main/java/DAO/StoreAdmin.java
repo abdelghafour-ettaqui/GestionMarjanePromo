@@ -25,14 +25,14 @@ public class StoreAdmin implements Dao<UsersEntity> {
     @Override
     public List<UsersEntity> getAll() {
 
-        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role ").setParameter("role", "storeAdmin");
+        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role ").setParameter("role", "StoreAdmin");
         return query.getResultList();
     }
 
     @Override
     public void save(UsersEntity user) {
 
-
+        System.out.println(user.toString());
         try {
             transaction.begin();
             entityManager.persist(user);

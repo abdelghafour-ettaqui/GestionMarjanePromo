@@ -20,14 +20,14 @@ class StoreAdminTest {
     @Test
     void getAllMethodNotNull() {
         StoreAdmin storeAdmin = new StoreAdmin();
-
+        System.out.println(storeAdmin.getAll().get(0).getFullname());
         assertNotNull(storeAdmin.getAll());
     }
 
     @Test
     void CheckIfSaveMethodGoesWell() {
 
-        UsersEntity user = new UsersEntity("abdelghafour","ettaqui88@gmail.com","password","StoreAdmin",1);
+        UsersEntity user = new UsersEntity("abdelghafour","ettaqui88@gmail.com","password","StoreAdmin" , 1);
 
 
         StoreAdmin storeAdmin= new StoreAdmin();
@@ -43,7 +43,7 @@ class StoreAdminTest {
     @Test
     void update() {
         StoreAdmin storeAdmin= new StoreAdmin();
-        UsersEntity user = new UsersEntity("abdela","email@gamil.com","password","StoreAdmin",1);
+        UsersEntity user = new UsersEntity("abdela","email@gamil.com","password","StoreAdmin",1,1);
         user.setIduser(5);
 
         storeAdmin.update(user);

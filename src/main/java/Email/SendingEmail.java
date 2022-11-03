@@ -31,6 +31,7 @@ public class SendingEmail {
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         // Get the Session object.// and pass username and password
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
@@ -42,7 +43,7 @@ public class SendingEmail {
         });
 
         // Used to debug SMTP issues
-//        session.setDebug(true);
+        session.setDebug(true);
 
 
         try {

@@ -35,8 +35,8 @@ class PromotionTest {
         long millis=System.currentTimeMillis();
         java.sql.Date date=new java.sql.Date(millis);
 
-        assertNotNull(promo.getAll(date));
-        for(PromoEntity promoA:promo.getAll(date)){
+        assertNotNull(promo.getAll(date,1));
+        for(PromoEntity promoA:promo.getAll(date,1)){
             System.out.println(promoA.getStartdate());
         }
 

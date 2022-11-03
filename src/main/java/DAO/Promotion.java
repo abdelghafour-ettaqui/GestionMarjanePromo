@@ -32,8 +32,8 @@ public class Promotion implements Dao<PromoEntity> {
 
     }
 
-    public List<PromoEntity> getAll(java.sql.Date currentDate) {
-        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.status='pendding' AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
+    public List<PromoEntity> getAll(java.sql.Date currentDate,long idStore) {
+        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.idStore= '"+idStore+"' AND p.status='pending' AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
         return query.getResultList();
     }
 

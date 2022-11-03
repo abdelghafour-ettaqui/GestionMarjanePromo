@@ -29,7 +29,6 @@ class UserTest {
     @Test
     void testValidateMethodWithValidEmailAndPassword() {
         String email = "ettaqui@gmail.com", password = "test";
-        User result= new User();
         boolean res = User.validate(email, password);
         assertTrue(res);
     }
@@ -37,7 +36,6 @@ class UserTest {
     @Test
     void testValidateMethodWithInvalidEmailAndPassword() {
         String email = "eaqui@gmail.com", password = "test";
-        User result= new User();
         boolean res = User.validate(email, password);
         assertFalse(res);
     }

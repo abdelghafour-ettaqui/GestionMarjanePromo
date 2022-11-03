@@ -8,17 +8,14 @@ import jakarta.persistence.Persistence;
 public class Connection {
 
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
+    private final static EntityManagerFactory entityManagerFactory;
 
     static {
         entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
     }
 
     public static EntityManager getEntityManager() {
-        entityManager = entityManagerFactory.createEntityManager();
-
-        return entityManager;
+        return entityManagerFactory.createEntityManager();
     }
 
 

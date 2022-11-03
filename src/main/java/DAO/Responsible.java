@@ -20,12 +20,17 @@ public class Responsible implements Dao<UsersEntity> {
 
         return user;
     }
-
-
     @Override
     public List<UsersEntity> getAll() {
 
-        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role ").setParameter("role", "Responsible");
+        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role And u.idstore=:idStore ").setParameter("role", "Responsible");
+        return query.getResultList();
+    }
+
+
+    public List<UsersEntity> getAll(long idStore) {
+
+        Query query = Connection.getEntityManager().createQuery("select u from UsersEntity u where u.role= :role And u.idstore=:idStore ").setParameter("role", "Responsible").setParameter("idStore",idStore);
         return query.getResultList();
     }
 

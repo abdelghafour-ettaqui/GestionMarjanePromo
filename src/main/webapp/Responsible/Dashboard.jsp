@@ -22,7 +22,7 @@
     <div class="mt-2">
         <table class="max-w-5xl mx-auto table-auto">
             <thead class="justify-between">
-            <tr class="bg-green-600">
+            <tr class="bg-blue-600">
 
                 <th class="px-16 py-2">
                     <span class="text-gray-100 font-semibold">Id</span>

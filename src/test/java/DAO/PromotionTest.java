@@ -100,18 +100,18 @@ class PromotionTest {
         Promotion promo = new Promotion();
         PromoEntity promoEntity = new PromoEntity();
 
-        String startDate="2022-11-01";
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate="01/11/2022";
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = sdf1.parse(startDate);
         java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
 
-        String endDate="2022-12-01";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String endDate="22/12/2022";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date1 = sdf.parse(endDate);
         java.sql.Date sqlEndDate = new java.sql.Date(date1.getTime());
 
 
-        int percentage = Integer.parseInt("50");
+        int percentage = Integer.parseInt("20");
         int idCategory=1;
         if( idCategory == 1 && percentage>20){
             System.out.println("for multimedia products the promotion should not be more than 20%");
@@ -125,7 +125,8 @@ class PromotionTest {
         promoEntity.setEnddate(sqlEndDate);
         promoEntity.setPercentage("50");
         promoEntity.setStatus("pending");
-        promoEntity.setIdsubcategory(1);
+        promoEntity.setIdsubcategory(0);
+        promoEntity.setIdcategory(1);
         promoEntity.setName("eid");
 
         promo.save(promoEntity);

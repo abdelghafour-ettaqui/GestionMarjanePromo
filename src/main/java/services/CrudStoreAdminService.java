@@ -1,10 +1,12 @@
 package services;
 
+import DAO.Store;
 import DAO.StoreAdmin;
 import Email.SendingEmail;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import metier.entity.StoreEntity;
 import metier.entity.UsersEntity;
 
 import java.io.IOException;
@@ -51,9 +53,12 @@ public class CrudStoreAdminService {
     public static void displayStoreAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         StoreAdmin storeAdmin = new StoreAdmin();
+        Store store = new Store();
+        List <StoreEntity> stores = store.getAll();
         List<UsersEntity> StoreAdmins = storeAdmin.getAll();
-
         request.setAttribute("storeAdmins",StoreAdmins);
+        request.setAttribute("stores",stores);
+
         request.getRequestDispatcher(".././SuperAdmin/crudStoreAdmin.jsp").forward(request,response);
 
     }

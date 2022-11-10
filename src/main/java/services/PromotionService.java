@@ -1,16 +1,20 @@
 package services;
 
 import DAO.Promotion;
+import DAO.Responsible;
 import DAO.StoreAdmin;
 import Email.SendingEmail;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import metier.entity.PromoEntity;
 import metier.entity.UsersEntity;
-
+import services.CrudResponsibleService;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,19 +29,48 @@ public class PromotionService {
 
     }
 
-    public static void AddPromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UsersEntity storeAdmin = new UsersEntity();
+    public static void AddPromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
+        Promotion promo = new Promotion();
+        PromoEntity promoEntity = new PromoEntity();
 
-        storeAdmin.setEmail(request.getParameter("email"));
-        storeAdmin.setFullname(request.getParameter("fullname"));
-        storeAdmin.setPassword(request.getParameter("password"));
-        storeAdmin.setRole("StoreAdmin");
-        storeAdmin.setIdstore(Integer.parseInt(request.getParameter("idStore")));
-        StoreAdmin admin = new StoreAdmin();
-        admin.save(storeAdmin);
-        String message = "hello, this your new account for managing your store \n the email is " + storeAdmin.getEmail() + " the password is " + storeAdmin.getPassword();
-        SendingEmail.send(storeAdmin.getEmail(), "new account", message);
-        displayPromotion(request, response);
+        String startDate=request.getParameter("startDate");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = sdf1.parse(startDate);
+        java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+
+        String endDate=request.getParameter("endDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date1 = sdf.parse(endDate);
+        java.sql.Date sqlEndDate = new java.sql.Date(date1.getTime());
+
+
+        int percentage =Integer.parseInt(request.getParameter("percentage"));
+
+        int idCategory=Integer.parseInt(request.getParameter("category"));
+        int idSubCategory=Integer.parseInt(request.getParameter("subcategory"));
+
+        System.out.println("1 "+startDate+" 2 "+endDate+" 3 "+request.getParameter("percentage")+" 4 "+idSubCategory+" 5 "+request.getParameter("name")+" 6 "+idCategory+" 7");
+        if( idCategory == 1 && percentage>20){
+
+            System.out.println("for multimedia products the promotion should not be more than 20%");
+
+        }
+        else if(percentage>50){
+            System.out.print("promotion should not be greater than 50%");
+
+        }
+
+        promoEntity.setStartdate(sqlStartDate);
+        promoEntity.setEnddate(sqlEndDate);
+        promoEntity.setPercentage(request.getParameter("percentage"));
+        promoEntity.setStatus("pending");
+        promoEntity.setIdsubcategory(idSubCategory);
+        promoEntity.setName(request.getParameter("name"));
+        promoEntity.setIdstore(1);
+        promoEntity.setIdcategory(idCategory);
+        promo.save(promoEntity);
+
+        CrudResponsibleService.displayResponsible(request, response);
 
 
     }
@@ -50,14 +83,18 @@ public class PromotionService {
         promo = promotion.get(Integer.parseInt(request.getParameter("idPromo")));
         promo.setStatus(request.getParameter("status"));
         promotion.update(promo);
-        displayPromotion(request, response);
+
     }
 
     public static void displayPromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         StoreAdmin storeAdmin = new StoreAdmin();
-        long idStore = 1;
+        HttpSession session = request.getSession();
+
+        long idStore = Long.parseLong(session.getAttribute("idStore").toString()) ;
+//        long idStore = 1;
         List<UsersEntity> StoreAdmins = storeAdmin.getAll();
+        
         Promotion promo = new Promotion();
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         String startTime = "08:00";
@@ -77,7 +114,7 @@ public class PromotionService {
 
             request.setAttribute("Promotions", promotions);
         }
-        request.getRequestDispatcher(".././Responsible/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher(".././Responsible/Dashboard.jsp").forward(request, response);
 
 
     }

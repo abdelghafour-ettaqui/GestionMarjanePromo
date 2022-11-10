@@ -1,5 +1,6 @@
 package DAO;
 
+import metier.entity.UsersEntity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,15 +29,16 @@ class UserTest {
 
     @Test
     void testValidateMethodWithValidEmailAndPassword() {
-        String email = "ettaqui@gmail.com", password = "test";
-        boolean res = User.validate(email, password);
-        assertTrue(res);
+        String email = "superAdmin@gmail.com", password = "password";
+        UsersEntity res = User.validate(email, password);
+
+        assertNotNull(res);
     }
 
     @Test
     void testValidateMethodWithInvalidEmailAndPassword() {
         String email = "eaqui@gmail.com", password = "test";
-        boolean res = User.validate(email, password);
-        assertFalse(res);
+        UsersEntity res = User.validate(email, password);
+        assertNull(res);
     }
 }

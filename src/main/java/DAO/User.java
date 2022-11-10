@@ -39,7 +39,7 @@ public class User implements Dao<UsersEntity> {
 
     }
 
-    public static boolean validate(String email, String password) {
+    public static UsersEntity validate(String email, String password) {
 
 
 
@@ -54,19 +54,20 @@ public class User implements Dao<UsersEntity> {
             System.out.println("------------------------------------------------------------ " + user.getFullname());
 
             if ( user.getPassword().equals(password)) {
-                return true;
+                return user;
             }
             transaction.commit();
-
+            entityManager.close();
 
 
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+
             }
             e.printStackTrace();
 
         }
-        return false;
+        return null;
     }
 }

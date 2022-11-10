@@ -44,6 +44,15 @@
                     <p class="font-medium text-slate-700 pb-2">Password</p>
                     <input id="password" name="password" type="password" class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password">
                 </label>
+
+
+                <select name="role" class="font-medium text-slate-700 pb-2" >
+                    <option value="">--Please choose an option--</option>
+                    <option value="storeAdmin">Store Admin</option>
+                    <option value="superAdmin">Super admin </option>
+                    <option value="responsible">responsible</option>
+
+                </select>
                 <div class="flex flex-row justify-between">
                     <div>
                         <label for="remember" class="">

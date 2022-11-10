@@ -5,6 +5,8 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
+
 import services.PromotionService;
 @WebServlet({"/promotion","/promotion/updatePromotion","/promotion/createPromotion","/promotion/displayPromotion"})
 @MultipartConfig
@@ -24,7 +26,11 @@ public class Promotion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
         if (path.equals("/promotion/createPromotion")){
-
+            try {
+                PromotionService.AddPromotion(request,response);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

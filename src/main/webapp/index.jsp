@@ -11,11 +11,29 @@
 <body>
 
 <div class="container col-md-8 col-md-offset-3" style="overflow: auto">
+    <%--    <h1>Login Form</h1>--%>
+    <%--    <form action="<%=request.getContextPath()%>/Login" method="post">--%>
 
+    <%--        <div class="form-group">--%>
+    <%--            <label for="email">Email:</label>--%>
+    <%--            <input type="text" class="form-control" id="email" placeholder="email" name="email" required>--%>
+    <%--        </div>--%>
+    <%--        <div class="form-group">--%>
+    <%--            <label for="password">Password:</label>--%>
+    <%--            <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>--%>
+    <%--        </div>--%>
+    <%--        <button type="submit" class="btn btn-primary">Submit</button>--%>
+    <%--    </form>--%>
+
+
+
+    <!-- component -->
     <body class="antialiased bg-slate-200">
     <div class="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
         <h1 class="text-4xl font-medium">Login</h1>
         <p class="text-slate-500">Hi, Welcome back ?</p>
+
+
         <form action="<%=request.getContextPath()%>/Login" method="post" class="my-10">
             <div class="flex flex-col space-y-5">
                 <label for="email">
@@ -26,6 +44,15 @@
                     <p class="font-medium text-slate-700 pb-2">Password</p>
                     <input id="password" name="password" type="password" class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password">
                 </label>
+
+
+                <select name="role" class="font-medium text-slate-700 pb-2" >
+                    <option value="">--Please choose an option--</option>
+                    <option value="StoreAdmin">Store Admin</option>
+                    <option value="superAdmin">Super admin </option>
+                    <option value="Responsible">responsible</option>
+
+                </select>
                 <div class="flex flex-row justify-between">
                     <div>
                         <label for="remember" class="">
@@ -49,7 +76,11 @@
             </div>
         </form>
     </div>
+
     </body>
+
+
+
 
 </div>
 </body>

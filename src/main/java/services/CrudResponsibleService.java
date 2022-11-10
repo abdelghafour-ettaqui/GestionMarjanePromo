@@ -1,12 +1,14 @@
 package services;
 
-import DAO.Responsible;
-import DAO.StoreAdmin;
+import DAO.*;
 import Email.SendingEmail;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import metier.entity.CategoryEntity;
+import metier.entity.StoreEntity;
+import metier.entity.SubcategoryEntity;
 import metier.entity.UsersEntity;
 
 import java.io.IOException;
@@ -24,11 +26,14 @@ public class CrudResponsibleService {
     }
 
     public static void AddResponsible(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int generatedPassword = (int) ((Math.random() * (999999999 - 111111111)) + 111111111);
 
         UsersEntity responsible = new UsersEntity();
+
         responsible.setEmail(request.getParameter("email"));
         responsible.setFullname(request.getParameter("fullname"));
-        responsible.setPassword(request.getParameter("password"));
+//        responsible.setPassword(request.getParameter("password"));
+        responsible.setPassword(Integer.toString(generatedPassword));
         responsible.setRole("Responsible");
         responsible.setIdstore(Integer.parseInt(request.getParameter("idStore")));
         responsible.setIdcategory(Integer.parseInt(request.getParameter("IdCategory")));
@@ -58,13 +63,27 @@ public class CrudResponsibleService {
 
     public static void displayResponsible(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        HttpSession session = request.getSession();
-//        session.setAttribute("storeAdmin",);
-        long idStore = 1;
+        HttpSession session = request.getSession();
+
+        long idStore = Long.parseLong(session.getAttribute("idStore").toString()) ;
+
         Responsible Responsible = new Responsible();
+        Category category = new Category();
+        SubCategory subCategory = new SubCategory();
+        Store store = new Store();
+
         List<UsersEntity> Responsibles = Responsible.getAll(idStore);
+        List<CategoryEntity> categories = category.getAll();
+        List<SubcategoryEntity> subCategories = subCategory.getAll();
+        List<StoreEntity> stores = store.getAll();
+
+
+
         request.setAttribute("Responsibles", Responsibles);
-        System.out.println("test");
+        request.setAttribute("categories", categories);
+        request.setAttribute("subCategories", subCategories);
+        request.setAttribute("stores", stores);
+
         request.getRequestDispatcher(".././Responsible/crudResponsible.jsp").forward(request,response);
 
     }

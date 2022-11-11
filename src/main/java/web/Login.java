@@ -49,18 +49,19 @@ public class Login extends HttpServlet {
     private void authenticate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        User users = new User();
 
         String role = request.getParameter("role");
 
-        UsersEntity user = User.validate(email, password);
+        UsersEntity user = users.validate(email,password);
 
         HttpSession session = request.getSession();
 
-//        System.out.println(" email: " + email+ " password: " +password + " role " +role);
-//        System.out.println("user "+ user.getRole());
+        System.out.println("test test");
 
         if (user != null && role.equals(user.getRole())) {
             if( user.getStatus().equals("inactive") ){
+
                 request.setAttribute("idUser",user.getIduser());
                 request.getRequestDispatcher(".././Login/setPassword.jsp").forward(request, response);
             }

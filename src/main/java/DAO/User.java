@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class User implements Dao<UsersEntity> {
-    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
-    private static EntityManager entityManager = entityManagerFactory.createEntityManager();
-    private static EntityTransaction transaction = entityManager.getTransaction();
+    private  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("marjane");
+    private  EntityManager entityManager = entityManagerFactory.createEntityManager();
+    private  EntityTransaction transaction = entityManager.getTransaction();
 
 
     @Override
@@ -39,9 +39,9 @@ public class User implements Dao<UsersEntity> {
 
     }
 
-    public static UsersEntity validate(String email, String password) {
+    public  UsersEntity validate(String email, String password) {
 
-
+        System.out.println("test 1111");
 
         try {
             transaction.begin();
@@ -57,7 +57,7 @@ public class User implements Dao<UsersEntity> {
                 return user;
             }
             transaction.commit();
-            entityManager.close();
+
 
 
         } catch (Exception e) {
@@ -67,6 +67,9 @@ public class User implements Dao<UsersEntity> {
             }
             e.printStackTrace();
 
+        }
+        finally {
+            entityManager.close();
         }
         return null;
     }

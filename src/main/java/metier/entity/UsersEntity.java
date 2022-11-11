@@ -2,6 +2,8 @@ package metier.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "users", schema = "public", catalog = "marjane")
 public class UsersEntity {
@@ -30,6 +32,14 @@ public class UsersEntity {
     @Basic
     @Column(name = "status")
     private String status;
+    @OneToMany(mappedBy = "usersByIdstoreadmin")
+    private Collection<StoreEntity> storesByIduser;
+    @ManyToOne
+    @JoinColumn(name = "idcategory", referencedColumnName = "idcategory", insertable = false, updatable = false)
+    private CategoryEntity categoryByIdcategory;
+    @ManyToOne
+    @JoinColumn(name = "idstore", referencedColumnName = "idstore", insertable = false, updatable = false)
+    private StoreEntity storeByIdstore;
 
     public int getIduser() {
         return iduser;
@@ -125,5 +135,61 @@ public class UsersEntity {
         result = 31 * result + (idstore != null ? idstore.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    public Collection<StoreEntity> getStoresByIduser() {
+        return storesByIduser;
+    }
+
+    public void setStoresByIduser(Collection<StoreEntity> storesByIduser) {
+        this.storesByIduser = storesByIduser;
+    }
+
+    public CategoryEntity getCategoryByIdcategory() {
+        return categoryByIdcategory;
+    }
+
+    public void setCategoryByIdcategory(CategoryEntity categoryByIdcategory) {
+        this.categoryByIdcategory = categoryByIdcategory;
+    }
+
+    public StoreEntity getStoreByIdstore() {
+        return storeByIdstore;
+    }
+
+    public void setStoreByIdstore(StoreEntity storeByIdstore) {
+        this.storeByIdstore = storeByIdstore;
+    }
+    public UsersEntity(String fullname, String email, String password, String role, Integer idcategory, Integer idstore) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.idcategory = idcategory;
+        this.idstore = idstore;
+    }
+    public UsersEntity(String fullname, String email, String password, String role,Integer idstore) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.idstore = idstore;
+    }
+    public UsersEntity(){
+
+    }
+
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "iduser=" + iduser +
+                ", fullname='" + fullname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", idcategory=" + idcategory +
+                ", idstore=" + idstore +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

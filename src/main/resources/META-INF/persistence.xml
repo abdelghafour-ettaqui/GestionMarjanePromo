@@ -11,6 +11,7 @@
         <class>metier.entity.SubcategoryEntity</class>
         <class>metier.entity.UsersEntity</class>
         <class>metier.entity.StoreEntity</class>
+
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/marjane"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

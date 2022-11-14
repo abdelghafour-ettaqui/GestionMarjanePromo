@@ -10,25 +10,26 @@ import java.sql.SQLException;
 
 import services.CrudStoreAdminService;
 
-@WebServlet({"/crudStoreAdmin","/crudStoreAdmin/displayStoreAdmin","/crudStoreAdmin/delete","/crudStoreAdmin/addStoreAdmin","/crudStoreAdmin/updateStoreAdmin"})
+@WebServlet({"/crudStoreAdmin", "/crudStoreAdmin/displayStoreAdmin", "/crudStoreAdmin/delete", "/crudStoreAdmin/addStoreAdmin", "/crudStoreAdmin/updateStoreAdmin"})
 @MultipartConfig
 public class CrudStoreAdmin extends HttpServlet {
-
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
-        System.out.println(path);
-        if (path.equals("/crudStoreAdmin/displayStoreAdmin")) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("auth") == null) {
+            response.sendRedirect("http://localhost/marjane_war_exploded/Login/Login.jsp");
+        } else if (path.equals("/crudStoreAdmin/displayStoreAdmin")) {
 
-            CrudStoreAdminService.displayStoreAdmin(request,response);
+            CrudStoreAdminService.displayStoreAdmin(request, response);
 
 
         } else if (path.equals("/crudStoreAdmin/delete")) {
 
             try {
-                CrudStoreAdminService.deleteStoreAdmin(request,response);
+                CrudStoreAdminService.deleteStoreAdmin(request, response);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -39,10 +40,14 @@ public class CrudStoreAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
-        if (path.equals("/crudStoreAdmin/addStoreAdmin")) {
-            CrudStoreAdminService.AddStoreAdmin(request,response);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("auth") == null) {
+            response.sendRedirect("http://localhost/marjane_war_exploded/Login/Login.jsp");
+        } else if (path.equals("/crudStoreAdmin/addStoreAdmin")) {
+            System.out.println("hello add");
+            CrudStoreAdminService.AddStoreAdmin(request, response);
         } else if (path.equals("/crudStoreAdmin/updateStoreAdmin")) {
-            CrudStoreAdminService.updateStoreAdmin(request,response);
+            CrudStoreAdminService.updateStoreAdmin(request, response);
         }
     }
 }

@@ -24,6 +24,8 @@ public class Promotion implements Dao<PromoEntity> {
 
     }
 
+
+
     @Override
     public List<PromoEntity> getAll() {
 
@@ -35,6 +37,11 @@ public class Promotion implements Dao<PromoEntity> {
     public List<PromoEntity> getAll(java.sql.Date currentDate,long idStore) {
 //        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.idstore= '"+idStore+"' AND p.status='pending' AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
         Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.idstore= '"+idStore+"'  AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
+        return query.getResultList();
+    }
+    public List<PromoEntity> getAll(java.sql.Date currentDate,long idStore,String status) {
+//        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.idstore= '"+idStore+"' AND p.status='pending' AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"'");
+        Query query = entityManager.createQuery("SELECT p FROM PromoEntity p WHERE p.idstore= '"+idStore+"'  AND p.startdate <= '"+currentDate+"' AND p.enddate >= '"+currentDate+"' AND p.status = '"+status+"' ");
         return query.getResultList();
     }
 

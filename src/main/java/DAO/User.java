@@ -1,6 +1,7 @@
 package DAO;
 
 import jakarta.persistence.*;
+import metier.entity.StoreEntity;
 import metier.entity.UsersEntity;
 import org.hibernate.Transaction;
 
@@ -15,7 +16,10 @@ public class User implements Dao<UsersEntity> {
 
     @Override
     public UsersEntity get(long id) {
-        return null;
+
+        UsersEntity user = entityManager.find(UsersEntity.class, id);
+
+        return user;
     }
 
     @Override
@@ -31,7 +35,19 @@ public class User implements Dao<UsersEntity> {
 
     @Override
     public void update(UsersEntity users) {
+        try {
+            transaction.begin();
 
+            entityManager.merge(users);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -41,7 +57,6 @@ public class User implements Dao<UsersEntity> {
 
     public  UsersEntity validate(String email, String password) {
 
-        System.out.println("test 1111");
 
         try {
             transaction.begin();

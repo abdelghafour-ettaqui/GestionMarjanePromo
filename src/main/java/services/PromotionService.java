@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import metier.entity.PromoEntity;
 import metier.entity.UsersEntity;
 import services.CrudResponsibleService;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -25,37 +26,37 @@ public class PromotionService {
         long id = Long.parseLong(request.getParameter("id"));
         StoreAdmin storeAdmin = new StoreAdmin();
         storeAdmin.delete(id);
-        displayPromotion(request, response);
+        displayPromotion(request, response,false,null);
 
     }
+
 
     public static void AddPromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         Promotion promo = new Promotion();
         PromoEntity promoEntity = new PromoEntity();
 
-        String startDate=request.getParameter("startDate");
+        String startDate = request.getParameter("startDate");
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = sdf1.parse(startDate);
         java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
 
-        String endDate=request.getParameter("endDate");
+        String endDate = request.getParameter("endDate");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date1 = sdf.parse(endDate);
         java.sql.Date sqlEndDate = new java.sql.Date(date1.getTime());
 
 
-        int percentage =Integer.parseInt(request.getParameter("percentage"));
+        int percentage = Integer.parseInt(request.getParameter("percentage"));
 
-        int idCategory=Integer.parseInt(request.getParameter("category"));
-        int idSubCategory=Integer.parseInt(request.getParameter("subcategory"));
+        int idCategory = Integer.parseInt(request.getParameter("category"));
+        int idSubCategory = Integer.parseInt(request.getParameter("subcategory"));
 
-        System.out.println("1 "+startDate+" 2 "+endDate+" 3 "+request.getParameter("percentage")+" 4 "+idSubCategory+" 5 "+request.getParameter("name")+" 6 "+idCategory+" 7");
-        if( idCategory == 1 && percentage>20){
+        System.out.println("1 " + startDate + " 2 " + endDate + " 3 " + request.getParameter("percentage") + " 4 " + idSubCategory + " 5 " + request.getParameter("name") + " 6 " + idCategory + " 7");
+        if (idCategory == 1 && percentage > 20) {
 
             System.out.println("for multimedia products the promotion should not be more than 20%");
 
-        }
-        else if(percentage>50){
+        } else if (percentage > 50) {
             System.out.print("promotion should not be greater than 50%");
 
         }
@@ -79,26 +80,26 @@ public class PromotionService {
 
         PromoEntity promo = new PromoEntity();
         Promotion promotion = new Promotion();
-        System.out.println("test teste testetsettet"+request.getParameter("idPromo"));
+        System.out.println("test teste testetsettet" + request.getParameter("idPromo"));
         promo = promotion.get(Integer.parseInt(request.getParameter("idPromo")));
         promo.setStatus(request.getParameter("status"));
         promotion.update(promo);
-
+        displayPromotion(request, response,false,null);
     }
 
-    public static void displayPromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public static void displayPromotion(HttpServletRequest request, HttpServletResponse response,boolean flag,String status) throws ServletException, IOException {
 
         StoreAdmin storeAdmin = new StoreAdmin();
         HttpSession session = request.getSession();
 
-        long idStore = Long.parseLong(session.getAttribute("idStore").toString()) ;
+        long idStore = Long.parseLong(session.getAttribute("idStore").toString());
 //        long idStore = 1;
         List<UsersEntity> StoreAdmins = storeAdmin.getAll();
-        
+
         Promotion promo = new Promotion();
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         String startTime = "08:00";
-        String endTime = "19:00";
+        String endTime = "23:00";
         LocalTime sTime = LocalTime.parse(startTime);
         LocalTime eTime = LocalTime.parse(endTime);
         LocalTime t = LocalTime.parse(currentTime);
@@ -108,13 +109,23 @@ public class PromotionService {
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
 
-        if (condition1 >= 0 && condition2 <= 0) {
+        if (condition1 >= 0 && condition2 <= 0 && !flag) {
 
-            List<PromoEntity> promotions = promo.getAll(date,idStore);
+            List<PromoEntity> promotions = promo.getAll(date, idStore);
 
             request.setAttribute("Promotions", promotions);
+
+            System.out.println("services servlet "+promotions.get(0).getIdcategory());
+
+            request.getRequestDispatcher(".././Responsible/Dashboard.jsp").forward(request, response);
         }
-        request.getRequestDispatcher(".././Responsible/Dashboard.jsp").forward(request, response);
+        else if(condition1 >= 0 && condition2 <= 0){
+            List<PromoEntity> promotions = promo.getAll(date, idStore,status);
+            System.out.println("status  ------------"+status);
+            request.setAttribute("Promotions", promotions);
+            request.getRequestDispatcher("../.././Responsible/Dashboard.jsp").forward(request, response);
+        }
+
 
 
     }

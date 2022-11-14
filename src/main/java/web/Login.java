@@ -9,7 +9,7 @@ import services.*;
 
 import java.io.IOException;
 
-@WebServlet({"/Login","/updatePassword"})
+@WebServlet({"/Login", "/updatePassword"})
 @MultipartConfig
 public class Login extends HttpServlet {
     @Override
@@ -24,6 +24,7 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String path = request.getServletPath();
+        HttpSession session = request.getSession();
         System.out.println(path);
         if (path.equals("/Login")) {
 
@@ -34,14 +35,16 @@ public class Login extends HttpServlet {
             }
 
 
-        } else if (path.equals("/updatePassword")) {
-            try{
-                updatePassword(request,response);
-            }
-            catch(Exception e){
+        } else if (path.equals("/updatePassword") && session.getAttribute("auth")!=null ) {
+            try {
+                updatePassword(request, response);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
+        }
+        else{
+            response.sendRedirect("Login/Login.jsp");
         }
 
     }
@@ -53,29 +56,29 @@ public class Login extends HttpServlet {
 
         String role = request.getParameter("role");
 
-        UsersEntity user = users.validate(email,password);
+        UsersEntity user = users.validate(email, password);
 
         HttpSession session = request.getSession();
 
-        System.out.println("test test");
-
-        if (user != null && role.equals(user.getRole())) {
-            if( user.getStatus().equals("inactive") ){
-
-                request.setAttribute("idUser",user.getIduser());
-                request.getRequestDispatcher(".././Login/setPassword.jsp").forward(request, response);
-            }
-            else if (user.getRole().equals("Responsible")) {
+        if (user != null) {
+            if (user.getStatus().equals("inactive")) {
+                session.setAttribute("idUser", user.getIduser());
+                session.setAttribute("auth",true);
+                request.getRequestDispatcher("/Login/set-password.jsp").forward(request, response);
+            } else if (user.getRole().equals("Responsible")) {
+                session.setAttribute("auth",true);
+                session.setAttribute("idUser",user.getIduser());
                 session.setAttribute("idCategory", user.getIdcategory());
                 session.setAttribute("idStore", user.getIdstore());
                 response.sendRedirect("http://localhost/marjane_war_exploded/promotion/displayPromotion");
 
             } else if (user.getRole().equals("superAdmin")) {
+                session.setAttribute("auth",true);
                 session.setAttribute("idStore", user.getIdstore());
                 response.sendRedirect("http://localhost/marjane_war_exploded/crudStoreAdmin/displayStoreAdmin");
 
             } else if (user.getRole().equals("StoreAdmin")) {
-
+                session.setAttribute("auth",true);
                 session.setAttribute("idStore", user.getIdstore());
 
                 response.sendRedirect("http://localhost/marjane_war_exploded/CrudResponsible/displayResponsible");
@@ -87,21 +90,21 @@ public class Login extends HttpServlet {
     }
 
     public static void updatePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        HttpSession session = request.getSession();
         String password = request.getParameter("password");
 
         String confirmPassword = request.getParameter("confirmPassword");
 
-        String idUser = request.getParameter("idUser");
-        if(!password.equals(confirmPassword)){
+        int idUser =(int) session.getAttribute("idUser");
+
+
+        if (!password.equals(confirmPassword)) {
             System.out.println("invalid password");
-        }
-        else{
-            UsersEntity user = new UsersEntity();
-            User users= new User();
-            user.setStatus("valid");
+        } else {
+            User users = new User();
+            UsersEntity user = users.get(idUser);
+            user.setStatus("active");
             user.setPassword(password);
-            user.setIduser(Integer.parseInt(idUser));
             users.update(user);
             response.sendRedirect("Login/Login.jsp");
         }

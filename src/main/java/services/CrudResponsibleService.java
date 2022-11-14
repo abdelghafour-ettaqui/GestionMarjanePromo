@@ -27,16 +27,18 @@ public class CrudResponsibleService {
 
     public static void AddResponsible(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int generatedPassword = (int) ((Math.random() * (999999999 - 111111111)) + 111111111);
+        HttpSession session = request.getSession();
 
+        int idStore = Integer.parseInt(session.getAttribute("idStore").toString()) ;
         UsersEntity responsible = new UsersEntity();
 
         responsible.setEmail(request.getParameter("email"));
         responsible.setFullname(request.getParameter("fullname"));
-//        responsible.setPassword(request.getParameter("password"));
         responsible.setPassword(Integer.toString(generatedPassword));
         responsible.setRole("Responsible");
-        responsible.setIdstore(Integer.parseInt(request.getParameter("idStore")));
+        responsible.setIdstore(idStore);
         responsible.setIdcategory(Integer.parseInt(request.getParameter("IdCategory")));
+        responsible.setStatus("inactive");
         Responsible Responsible = new Responsible();
         Responsible.save(responsible);
         String message = "hello, this your new account for managing you category \n the email is " + responsible.getEmail() + " the password is " + responsible.getPassword();
@@ -47,16 +49,14 @@ public class CrudResponsibleService {
     }
 
     public static void updateResponsible(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UsersEntity responsible = new UsersEntity();
 
+        Responsible Responsible = new Responsible();
+        UsersEntity responsible= Responsible.get(Integer.parseInt(request.getParameter("idResponsible")));
         responsible.setEmail(request.getParameter("email"));
         responsible.setFullname(request.getParameter("fullname"));
-        responsible.setPassword(request.getParameter("password"));
         responsible.setRole("Responsible");
-        responsible.setIdstore(Integer.parseInt(request.getParameter("idStore")));
+//        responsible.setIdstore(Integer.parseInt(request.getParameter("idStore")));
         responsible.setIdcategory(Integer.parseInt(request.getParameter("IdCategory")));
-        responsible.setIduser(Integer.parseInt(request.getParameter("idResponsible")));
-        Responsible Responsible = new Responsible();
         Responsible.update(responsible);
         displayResponsible(request, response);
     }
@@ -87,6 +87,25 @@ public class CrudResponsibleService {
         request.getRequestDispatcher(".././Responsible/crudResponsible.jsp").forward(request,response);
 
     }
+    public static void displayOneResponsible(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+
+        long idUser = Long.parseLong(session.getAttribute("idUser").toString()) ;
+
+        Responsible Responsible = new Responsible();
+
+        System.out.println(idUser);
+        UsersEntity responsible = Responsible.get(idUser);
+
+        request.setAttribute("responsible", responsible);
+
+        request.getRequestDispatcher("./Responsible/Profile.jsp").forward(request,response);
+
+
+
+}
+
 
 
 }

@@ -28,13 +28,14 @@
                     <p class="font-medium text-slate-700 pb-2">Confirm password</p>
                     <%
                         try {
-                            String idUser = (String) request.getAttribute("idUser");
-                            if(idUser.equals(null)){
-                                out.print("nothing to print");
+                            int idUser = (int) request.getAttribute("idUser");
+                            if(idUser==0){
+                                System.out.print("nothing to print");
                             }else{
+
                                  %>
 
-                    <input type="hidden" value="<%=  idUser %>" />
+                    <input type="hidden" name="idUser" value="<%=  idUser %>" placeholder="<%=  idUser %>" class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"  />
 
                     <%
                     }

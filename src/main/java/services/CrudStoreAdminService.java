@@ -24,12 +24,14 @@ public class CrudStoreAdminService {
     }
     public static void AddStoreAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsersEntity storeAdmin = new UsersEntity();
-
+        int generatedPassword = (int) ((Math.random() * (999999999 - 111111111)) + 111111111);
         storeAdmin.setEmail(request.getParameter("email"));
         storeAdmin.setFullname(request.getParameter("fullname"));
-        storeAdmin.setPassword(request.getParameter("password"));
+        storeAdmin.setPassword(Integer.toString(generatedPassword));
+//        storeAdmin.setPassword(request.getParameter("password"));
         storeAdmin.setRole("StoreAdmin");
         storeAdmin.setIdstore(Integer.parseInt(request.getParameter("idStore")));
+        storeAdmin.setStatus("inactive");
         StoreAdmin admin = new StoreAdmin();
         admin.save(storeAdmin);
         String message="hello, this your new account for managing your store \n the email is "+storeAdmin.getEmail()+" the password is "+storeAdmin.getPassword();
@@ -39,14 +41,17 @@ public class CrudStoreAdminService {
 
     }
     public static void updateStoreAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UsersEntity storeAdmin = new UsersEntity();
+
+        StoreAdmin admin = new StoreAdmin();
+
+        UsersEntity storeAdmin = admin.get(Integer.parseInt(request.getParameter("idStoreAdmin")));
+
         storeAdmin.setEmail(request.getParameter("email"));
         storeAdmin.setFullname(request.getParameter("fullname"));
-        storeAdmin.setPassword(request.getParameter("password"));
         storeAdmin.setRole("StoreAdmin");
+        storeAdmin.setStatus("inactive");
         storeAdmin.setIdstore(Integer.parseInt(request.getParameter("idStore")));
-        storeAdmin.setIduser(Integer.parseInt(request.getParameter("idStoreAdmin")));
-        StoreAdmin admin = new StoreAdmin();
+
         admin.update(storeAdmin);
         displayStoreAdmin(request,response);
     }
